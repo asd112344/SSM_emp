@@ -1,0 +1,62 @@
+package com.service;
+
+import com.entity.Employee;
+import com.utils.Page;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @ClassName IEmpServoce
+ * @Description TODO
+ * @Author YHT
+ * @Date 2021/7/9 10:41
+ */
+public interface IEmpService {
+    /**
+     * 查找所有员工信息
+     * @param page
+     * @return
+     */
+    List<Employee> listEmp(Page page);
+
+    /**
+     * 获取记录总数
+     * @return
+     */
+    int getEmpTotal();
+
+    /**
+     * 根据条件查找员工
+     * @param map
+     * @return
+     */
+    List<Employee> searchEmp(Map<String, Object> map);
+
+    /**
+     * 添加员工
+     * @param employee
+     */
+    void addEmp(Employee employee);
+
+    /**
+     * 根据id查找员工
+     * @param id
+     * @return
+     */
+    Employee selectEmpById(int id);
+
+    /**
+     * 修改员工信息
+     * @param employee
+     */
+    void modifyEmp(Employee employee);
+
+    /**
+     * 删除员工信息
+     * @param id
+     */
+    void deleteEmp(int id);
+
+
+}

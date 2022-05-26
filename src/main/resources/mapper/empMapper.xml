@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dao.IEmployeeDao">
+    <!--查询所有员工信息-->
+    <select id="findAllEmp" resultType="com.entity.Employee">
+        select * from t_emp;
+    </select>
+    <!--按页数查找员工信息-->
+    <select id="listEmp" resultType="com.entity.Employee">
+        select * from t_emp
+        <if test="start!=null and count!=null">
+            limit #{start},#{count}
+        </if>
+    </select>
+    <!--根据条件查找员工信息-->
+    <select id="searchEmp" parameterType="Map" resultType="com.entity.Employee">
+        select * from t_emp where 1=1
+        <if test="name!=null">
+            and name like #{name}
+        </if>
+        <if test="email!=null">
+            and email = #{email}
+        </if>
+        <if test="empId!=null">
+            and empId = #{empId}
+        </if>
+        <if test="page.start!=null and page.count!=null">
+            limit #{page.start},#{page.count}
+        </if>
+    </select>
+    <!--添加员工-->
+    <insert id="addEmp" parameterType="com.entity.Employee">
+        insert into  t_emp(empId, name, gender, email, birth, deptId) values(#{empId}, #{name}, #{gender}, #{email}, #{birth}, #{deptId});
+    </insert>
+    <!--修改员工信息-->
+    <update id="modifyEmp" parameterType="com.entity.Employee">
+        update t_emp set empId = #{empId}, name = #{name}, gender = #{gender}, email = #{email}, birth = #{birth}, deptId = #{deptId} where id = #{id}
+    </update>
+    <!--获取记录总数-->
+    <select id="getEmpTotal" resultType="int">
+        select count(*) from t_emp;
+    </select>
+    <!--根据id查找员工-->
+    <select id="selectEmpById" resultType="com.entity.Employee">
+        select * from t_emp where id = #{id};
+    </select>
+    <!--删除员工-->
+    <delete id="deleteEmp" parameterType="int">
+        delete from t_emp where id = #{id}
+    </delete>
+</mapper>

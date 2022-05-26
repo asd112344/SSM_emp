@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dao.IDepartmentDao">
+    <!--查询所有部门信息-->
+    <select id="findAllDepartment" resultType="com.entity.Department">
+        select * from t_dept;
+    </select>
+    <!--根据id查找部门-->
+    <select id="findDeptById" resultType="com.entity.Department" parameterType="int">
+        select * from t_dept where id = #{id};
+    </select>
+    <!--按页数查找部门信息-->
+    <select id="listDept" resultType="com.entity.Department">
+        select * from t_dept
+        <if test="start!=null and count!=null">
+            limit #{start},#{count}
+        </if>
+    </select>
+    <!--添加部门-->
+    <insert id="insertDept" parameterType="com.entity.Department">
+        insert into t_dept(deptId, deptName) values(#{deptId}, #{deptName});
+    </insert>
+    <!--修改部门信息-->
+    <update id="modifyDept" parameterType="com.entity.Department">
+        update t_dept set deptId = #{deptId}, deptName = #{deptName} where id = #{id}
+    </update>
+    <!--根据名称查找部门-->
+    <select id="searchByName" parameterType="Map" resultType="com.entity.Department">
+        select * from t_dept where deptName like #{deptName}
+        <if test="page.start!=null and page.count!=null">
+            limit #{page.start},#{page.count}
+        </if>
+    </select>
+    <!--获取记录总数-->
+    <select id="getDeptTotal" resultType="int">
+        select count(*) from t_dept;
+    </select>
+    <!--根据id查找部门信息-->
+    <delete id="deleteDept" parameterType="int">
+        delete from t_dept where id = #{id}
+    </delete>
+</mapper>

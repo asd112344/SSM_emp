@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.dao.IUserDao">
+    <!--根据id查找用户-->
+    <select id="findById" resultType="com.entity.User" parameterType="Integer">
+        select * from t_user where id = #{id};
+    </select>
+    <!--根据用户名和密码查找用户-->
+    <select id="findByNameAndPwd" resultType="com.entity.User" parameterType="Map">
+        select * from t_user where name = #{name} and password = #{password};
+    </select>
+    <!--添加用户-->
+    <insert id="insertUser" parameterType="com.entity.User">
+        insert into t_user(name, password, identity, telNumber, idCard, email) values(#{name}, #{password}, #{identity}, #{telNumber}, #{idCard}, #{email});
+    </insert>
+    <!--修改用户-->
+    <update id="modifyUser" parameterType="com.entity.User">
+        update t_user set name = #{name}, identity = #{identity}, telNumber = #{telNumber}, idCard = #{idCard}, email = #{email} where id = #{id}
+    </update>
+    <!--修改用户密码-->
+    <update id="modifyPwd" parameterType="Map">
+         update t_user set password = #{password} where id = #{id}
+    </update>
+</mapper>

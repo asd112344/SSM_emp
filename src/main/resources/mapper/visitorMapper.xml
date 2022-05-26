@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dao.IVisitorDao">
+    <!--按页数查找访客信息-->
+    <select id="listVisitor" resultType="com.entity.Visitor">
+        select * from t_visitor
+        <if test="start!=null and count!=null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+    <!--获取记录总数-->
+    <select id="getVisitorTotal" resultType="int">
+        select count(*) from  t_visitor;
+    </select>
+    <insert id="addVisitor" parameterType="com.entity.Visitor">
+        insert into t_visitor(name, identity, telPhone, email, visitTime) values(#{name}, #{identity}, #{telPhone}, #{email}, #{visitTime});
+    </insert>
+    <!--根据名称查找访客信息-->
+    <select id="searchByName" parameterType="Map" resultType="com.entity.Visitor">
+        select * from t_visitor where name like #{name}
+        <if test="page.start!=null and page.count!=null">
+            limit #{page.start},#{page.count}
+        </if>
+    </select>
+
+</mapper>
